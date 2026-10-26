@@ -30,15 +30,3 @@ Para cambiar contenido basta con editar `src/data/profile.js`: la web y el termi
 `help`, `ls [-a] [-l]`, `cd`, `pwd`, `cat`, `head [-n]`, `tree`, `grep [-i]`, `whoami`, `neofetch`, `open`, `download cv`, `history`, `lang`, `clear`… y alguno más.
 
 Autocompletado con Tab, historial con ↑ ↓ y Ctrl+L para limpiar.
-
-## Desarrollo
-
-Requiere Node 22.23.4 o superior.
-
-```bash
-npm install
-npm run dev
-npm run build    # genera dist/
-```
-
-El contenido de `dist/` se sube tal cual al hosting.
