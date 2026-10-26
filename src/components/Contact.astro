@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import { copy, links } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang].contact;
+const cv = copy[lang].hero.cv;
+---
+<section id="contact" class="section">
+  <div class="wrap">
+    <div class="box">
+      <span class="label">~/{lang === 'es' ? 'contacto.txt' : 'contact.txt'}</span>
+      <h2>{c.title}</h2>
+      <p>{c.lead}</p>
+      <a class="mail" href={`mailto:${links.email}`}>{links.email}</a>
+      <div class="actions">
+        <a class="btn btn-primary" href={links.cv} download><Icon name="download" />{cv}</a>
+        <a class="btn" href={links.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" />LinkedIn</a>
+        <a class="btn" href={links.github} target="_blank" rel="noopener"><Icon name="github" />GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .box {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 56px 24px;
+    border: 1px solid var(--line-2);
+    border-radius: 20px;
+    background:
+      radial-gradient(500px 220px at 50% 0%, rgba(51, 214, 221, 0.14), transparent 70%),
+      var(--bg-2);
+  }
+  .label { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  h2 { font-size: clamp(28px, 4vw, 38px); font-weight: 650; }
+  p { color: var(--text-2); font-size: 17px; max-width: 460px; }
+  .mail {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent-line);
+    word-break: break-all;
+  }
+  .mail:hover { border-bottom-color: var(--accent); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+</style>

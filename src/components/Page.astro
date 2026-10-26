@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Projects from './Projects.astro';
+import Homelab from './Homelab.astro';
+import Stack from './Stack.astro';
+import Terminal from './Terminal.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+
+const { lang } = Astro.props;
+---
+<Base lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Projects lang={lang} />
+    <Homelab lang={lang} />
+    <Stack lang={lang} />
+    <Terminal lang={lang} />
+    <Contact lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Base>

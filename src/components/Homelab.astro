@@ -1,0 +1,155 @@
+---
+import { copy, homelab } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang].homelab;
+const hostingNote = lang === 'es'
+  ? 'Paddock Daily se compila en la Pi y se publica por FTP'
+  : 'Paddock Daily is built on the Pi and shipped over FTP';
+---
+<section id="homelab" class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label">~/homelab</span>
+      <h2>{c.title}</h2>
+      <p>{c.lead}</p>
+    </div>
+
+    <div class="diagram">
+      <div class="col">
+        <div class="node">
+          <span class="node-title">{c.internet}</span>
+          <span class="node-sub">{lang === 'es' ? 'Visitantes y webhooks' : 'Visitors and webhooks'}</span>
+        </div>
+      </div>
+
+      <div class="link" aria-hidden="true"><span></span></div>
+
+      <div class="col">
+        <div class="node node-accent">
+          <span class="node-title">Cloudflare Tunnel</span>
+          <span class="node-sub">{lang === 'es' ? 'Sin puertos abiertos · TLS' : 'No open ports · TLS'}</span>
+        </div>
+      </div>
+
+      <div class="link" aria-hidden="true"><span></span></div>
+
+      <div class="server">
+        <div class="server-head">
+          <span class="led" aria-hidden="true"></span>
+          <span>{c.server}</span>
+        </div>
+        <ul class="services">
+          {homelab.services.map((s) => (
+            <li>
+              <span class="svc-name">{s.name}</span>
+              <span class="svc-desc">{s[lang]}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="server-foot">{c.managed}</p>
+      </div>
+
+      <div class="link link-both" aria-hidden="true"><span></span></div>
+
+      <div class="col">
+        <div class="node">
+          <span class="node-title">{c.external}</span>
+          <ul class="ext">
+            {homelab.external.map((e) => <li>{e}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="hosting"><span>{c.hosting}</span> · {hostingNote}</p>
+  </div>
+</section>
+
+<style>
+  .diagram {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px minmax(0, 0.9fr) 40px minmax(0, 1.7fr) 40px minmax(0, 1fr);
+    align-items: center;
+  }
+  .col { display: grid; gap: 16px; }
+  .node {
+    display: grid;
+    gap: 4px;
+    padding: 16px;
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .hosting { margin-top: 20px; font-size: 13.5px; color: var(--muted); }
+  .hosting span { color: var(--text-2); font-weight: 550; }
+  .node-accent { border-color: var(--accent-line); background: var(--accent-soft); }
+  .node-title { font-weight: 600; font-size: 15px; }
+  .node-sub { font-size: 13px; color: var(--text-2); line-height: 1.45; }
+  .ext { display: grid; gap: 4px; margin-top: 6px; font-family: var(--mono); font-size: 12.5px; color: var(--text-2); }
+
+  .link { position: relative; height: 2px; }
+  .link span {
+    position: absolute;
+    inset: 0 6px;
+    background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 11px);
+    opacity: .7;
+    background-size: 22px 2px;
+    animation: flow 1.2s linear infinite;
+  }
+  .link span::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left-color: var(--accent);
+  }
+  .link-both span::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-right-color: var(--accent);
+  }
+  @keyframes flow { to { background-position: 22px 0; } }
+
+  .server {
+    padding: 18px;
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(51, 214, 221, 0.07), var(--bg-2));
+  }
+  .server-head { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 14px; font-weight: 600; }
+  .led { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+  .services li {
+    display: grid;
+    gap: 2px;
+    padding: 10px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .svc-name { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .svc-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.4; }
+  .server-foot { margin-top: 12px; font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
+
+  @media (max-width: 1000px) {
+    .diagram { grid-template-columns: 1fr; justify-items: stretch; }
+    .link { height: 32px; width: 2px; justify-self: center; }
+    .link span {
+      inset: 4px 0;
+      background: repeating-linear-gradient(180deg, var(--accent) 0 6px, transparent 6px 11px);
+      background-size: 2px 22px;
+      animation-name: flow-v;
+    }
+    .link span::after { right: -4px; top: auto; bottom: -6px; border-left-color: transparent; border-top-color: var(--accent); }
+    .link-both span::before { left: -4px; top: -6px; border-right-color: transparent; border-bottom-color: var(--accent); }
+    @keyframes flow-v { to { background-position: 0 22px; } }
+  }
+  @media (max-width: 360px) {
+    .services { grid-template-columns: 1fr; }
+  }
+</style>

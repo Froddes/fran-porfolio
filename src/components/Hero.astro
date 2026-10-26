@@ -1,0 +1,128 @@
+---
+import Icon from './Icon.astro';
+import { copy, links } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const h = copy[lang].hero;
+---
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">{h.kicker}</p>
+      <h1>{h.title[0]}<br /><span>{h.title[1]}</span></h1>
+      <p class="intro">{h.intro}</p>
+
+      <div class="availability">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <strong>{h.availability}</strong>
+          <span>{h.availabilityDetail}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href={links.cv} download><Icon name="download" />{h.cv}</a>
+        <a class="btn btn-icon" href={links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+        <a class="btn btn-icon" href={links.github} target="_blank" rel="noopener" aria-label="GitHub"><Icon name="github" /></a>
+        <a class="btn btn-icon" href={`mailto:${links.email}`} aria-label="Email"><Icon name="mail" /></a>
+        <a class="explore" href="#terminal"><Icon name="terminal" />{h.explore}</a>
+      </div>
+    </div>
+
+    <svg class="flow" viewBox="0 0 420 330" aria-hidden="true">
+      <g fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".5">
+        <path d="M76 52 C 140 52, 140 132, 196 132" />
+        <path d="M76 52 C 140 52, 140 52, 196 52" />
+        <path d="M252 52 C 300 52, 290 132, 326 132" />
+        <path d="M252 132 C 290 132, 290 132, 326 132" />
+        <path d="M252 132 C 300 132, 280 240, 330 240" />
+        <path d="M76 52 C 120 52, 110 240, 160 240" />
+      </g>
+      <g fill="var(--bg-2)" stroke="var(--accent)" stroke-width="1.5">
+        <rect x="20" y="30" width="56" height="44" rx="10" />
+        <rect x="196" y="30" width="56" height="44" rx="10" opacity=".75" />
+        <rect x="196" y="110" width="56" height="44" rx="10" />
+        <rect x="326" y="110" width="56" height="44" rx="10" opacity=".85" />
+        <rect x="160" y="218" width="56" height="44" rx="10" opacity=".6" />
+        <rect x="330" y="218" width="56" height="44" rx="10" opacity=".7" />
+      </g>
+      <g fill="var(--accent)">
+        <circle cx="76" cy="52" r="3.2" /><circle cx="196" cy="52" r="3.2" /><circle cx="252" cy="52" r="3.2" />
+        <circle cx="196" cy="132" r="3.2" /><circle cx="252" cy="132" r="3.2" /><circle cx="326" cy="132" r="3.2" />
+        <circle cx="160" cy="240" r="3.2" /><circle cx="330" cy="240" r="3.2" />
+      </g>
+      <g fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 44 l-7 8 l7 8 M56 44 l7 8 l-7 8 M51 42 l-6 20" />
+        <path d="M211 46 h26 M211 52 h26 M211 58 h16" />
+        <ellipse cx="224" cy="125" rx="11" ry="4" /><path d="M213 125 v14 a11 4 0 0 0 22 0 v-14" />
+        <path d="M340 136 l7 -9 l7 9 l7 -9 M340 142 h22" />
+        <path d="M175 240 h26 M188 228 v24" />
+        <rect x="342" y="230" width="32" height="20" rx="3" /><path d="M348 240 h4 M356 240 h12" />
+      </g>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; padding: 96px 0 24px; overflow: hidden; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(600px 320px at 80% 30%, rgba(51, 214, 221, 0.12), transparent 70%),
+      radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1.2px) 0 0 / 24px 24px;
+    mask-image: linear-gradient(to bottom, #000 40%, transparent);
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .kicker { font-family: var(--mono); font-size: 14px; color: var(--accent); margin-bottom: 18px; }
+  h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 680; letter-spacing: -0.035em; }
+  h1 span { color: var(--accent); }
+  .intro { margin-top: 24px; font-size: 18px; color: var(--text-2); max-width: 600px; }
+
+  .availability {
+    display: inline-flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 28px;
+    padding: 12px 16px;
+    border: 1px solid var(--accent-line);
+    background: var(--accent-soft);
+    border-radius: 12px;
+  }
+  .availability div { display: grid; }
+  .availability strong { font-weight: 600; font-size: 15px; }
+  .availability span { color: var(--text-2); font-size: 14px; }
+  .dot { width: 9px; height: 9px; margin-top: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(51, 214, 221, .6); animation: pulse 2.4s infinite; flex: none; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(51, 214, 221, .55); }
+    70% { box-shadow: 0 0 0 10px rgba(51, 214, 221, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(51, 214, 221, 0); }
+  }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; }
+  .explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .explore :global(svg) { width: 18px; height: 18px; }
+  .explore:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  .flow { width: 100%; max-width: 440px; justify-self: end; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .flow { display: none; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding-top: 56px; }
+    .intro { font-size: 16.5px; }
+    .explore { margin-left: 0; width: 100%; margin-top: 4px; }
+  }
+</style>

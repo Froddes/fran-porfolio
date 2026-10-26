@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import { copy, person, links } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang];
+const site = Astro.site.href.replace(/\/$/, '');
+const canonical = lang === 'es' ? `${site}/` : `${site}/en/`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: person.name,
+  alternateName: person.short,
+  url: canonical,
+  email: `mailto:${links.email}`,
+  jobTitle: lang === 'es' ? 'Estudiante de Ingeniería Informática' : 'Computer Engineering student',
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de Sevilla' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Sevilla', addressCountry: 'ES' },
+  sameAs: [links.github, links.linkedin, links.froddes],
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.title}</title>
+    <meta name="description" content={c.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={`${site}/`} />
+    <link rel="alternate" hreflang="en" href={`${site}/en/`} />
+    <link rel="alternate" hreflang="x-default" href={`${site}/`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0b0f14" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={c.title} />
+    <meta property="og:description" content={c.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site}/og.png`} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

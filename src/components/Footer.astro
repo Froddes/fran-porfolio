@@ -1,0 +1,28 @@
+---
+import { copy, links } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>© {year} Francisco Javier Rodríguez Martín</span>
+    <span>{copy[lang].footer.replace('froddes.com', '')}<a href={links.froddes} target="_blank" rel="noopener">froddes.com</a></span>
+  </div>
+</footer>
+
+<style>
+  .footer { margin-top: 96px; border-top: 1px solid var(--line); }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 24px;
+    padding-bottom: 32px;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  a { color: var(--text-2); }
+  a:hover { color: var(--accent); }
+</style>

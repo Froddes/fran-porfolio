@@ -1,0 +1,280 @@
+---
+import * as icons from 'simple-icons';
+import { copy, layers, projects } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang].stack;
+const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
+
+const readable = (hex) => {
+  const n = parseInt(hex, 16);
+  const [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255].map((v) => v / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.3 ? '#dfe5ea' : `#${hex}`;
+};
+
+const initials = (name) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+
+const caption = (item) => {
+  if (item.used.length) return `${c.usedIn} ${item.used.map((s) => byslug[s].name).join(' · ')}`;
+  return item.uni ? c.uni : c.self;
+};
+---
+<section id="stack" class="section" data-stack>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label">~/stack</span>
+      <h2>{c.title}</h2>
+      <p>{c.lead}</p>
+    </div>
+
+    <div class="filter">
+      <span class="filter-label">{c.filter}</span>
+      <ul>
+        {projects.map((p) => (
+          <li>
+            <button type="button" data-project={p.slug} style={`--dot: ${p.color}`} aria-pressed="false">
+              <span class="dot"></span>{p.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <span class="count" data-stack-count aria-live="polite"></span>
+    </div>
+
+    <div class="stack">
+      <span class="edge edge-top">{c.top}</span>
+      <ol class="layers">
+        {layers.map((layer, n) => (
+          <li class="layer" data-layer style={`--i: ${n}`}>
+            <div class="layer-head">
+              <span class="layer-num">{String(n + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{layer[lang]}</h3>
+                <p>{layer.note[lang]}</p>
+              </div>
+            </div>
+            <ul class="techs">
+              {layer.items.map((item) => {
+                const icon = item.icon ? icons[item.icon] : null;
+                const color = icon ? readable(icon.hex) : 'var(--text-2)';
+                return (
+                  <li>
+                    <button
+                      type="button"
+                      class="tech"
+                      data-tech
+                      data-used={item.used.join(' ')}
+                      data-tip={caption(item)}
+                      aria-label={`${item.name}: ${caption(item)}`}
+                      style={`--brand: ${color}`}
+                    >
+                      {icon
+                        ? <svg class="tech-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={icon.path} /></svg>
+                        : <span class="tech-icon mono" aria-hidden="true">{initials(item.name)}</span>}
+                      <span class="tech-name">{item.name}</span>
+                      {item.uni && <span class="uni">uni</span>}
+                      {item.used.length > 0 && (
+                        <span class="dots" aria-hidden="true">
+                          {item.used.map((s) => <i style={`background: ${byslug[s].color}`}></i>)}
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        ))}
+      </ol>
+      <span class="edge edge-bottom">{c.bottom}</span>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { mountStack } from '../scripts/stack.js';
+
+  const root = document.querySelector('[data-stack]');
+  if (root) mountStack(root);
+</script>
+
+<style>
+  .filter { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 28px; }
+  .filter-label { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .filter ul { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: var(--bg-2);
+    color: var(--text-2);
+    font: inherit;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: color .3s ease, border-color .3s ease, background .3s ease, transform .3s ease;
+  }
+  .filter button:hover { color: var(--text); transform: translateY(-1px); }
+  .filter button[aria-pressed='true'] {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--dot) 60%, transparent);
+    background: color-mix(in srgb, var(--dot) 12%, var(--bg-2));
+  }
+  .filter .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+
+  .stack { position: relative; padding-left: 28px; }
+  .stack::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 26px;
+    bottom: 26px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent));
+  }
+  .edge {
+    display: block;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-left: -28px;
+    padding-left: 0;
+  }
+  .edge::before { content: '● '; font-size: 10px; }
+  .edge-top { margin-bottom: 12px; }
+  .edge-bottom { margin-top: 12px; }
+
+  .layers { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .layer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, var(--surface), var(--bg-2));
+    transition:
+      opacity .6s ease calc(var(--i) * 90ms),
+      transform .7s cubic-bezier(.22, 1, .36, 1) calc(var(--i) * 90ms),
+      border-color .35s ease,
+      background .35s ease;
+  }
+  .layer::before {
+    content: '';
+    position: absolute;
+    left: -27px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    transition: background .35s ease, box-shadow .35s ease;
+  }
+  :global(.anim) .layer { opacity: 0; transform: translateX(-14px); }
+  :global(.anim.in) .layer { opacity: 1; transform: none; }
+  .layer:hover { border-color: var(--line-2); background: linear-gradient(90deg, var(--surface-2), var(--bg-2)); }
+  .layer:hover::before { background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  :global(.anim.in) .layer.faded, .layer.faded { opacity: .45; }
+
+  .layer-head { display: flex; gap: 14px; align-items: baseline; }
+  .layer-num { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+  .layer-head h3 { font-size: 17px; font-weight: 620; letter-spacing: -0.01em; }
+  .layer-head p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  .techs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tech {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 12px 0 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 13.5px;
+    cursor: default;
+    transition: transform .35s cubic-bezier(.22, 1, .36, 1), border-color .3s ease, box-shadow .3s ease, opacity .35s ease, background .3s ease;
+  }
+  .tech:hover, .tech:focus-visible, .tech.on {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    background: color-mix(in srgb, var(--brand) 8%, var(--bg));
+    box-shadow: 0 10px 24px -14px var(--brand);
+  }
+  .tech.dim { opacity: .22; }
+  .tech.match {
+    border-color: color-mix(in srgb, var(--match) 70%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--match) 30%, transparent), 0 10px 24px -14px var(--match);
+  }
+  .tech-icon { width: 18px; height: 18px; flex: none; fill: var(--brand); }
+  .tech-icon.mono {
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    background: var(--surface-2);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+  .uni {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid var(--line-2);
+    border-radius: 5px;
+    padding: 0 5px;
+    line-height: 16px;
+  }
+  .dots { display: inline-flex; gap: 3px; margin-left: 2px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; transition: transform .3s ease; }
+  .tech:hover .dots i { transform: scale(1.35); }
+
+  .tech::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    z-index: 5;
+    padding: 5px 9px;
+    border-radius: 7px;
+    border: 1px solid var(--line-2);
+    background: var(--surface-2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 4px);
+    transition: opacity .25s ease, transform .3s cubic-bezier(.22, 1, .36, 1);
+  }
+  .tech:hover::after, .tech:focus-visible::after, .tech.on::after { opacity: 1; transform: translate(-50%, 0); }
+
+  .count { font-family: var(--mono); font-size: 12.5px; color: var(--muted); transition: opacity .25s ease; }
+
+  @media (max-width: 860px) {
+    .layer { grid-template-columns: 1fr; gap: 12px; }
+  }
+  @media (max-width: 640px) {
+    .stack { padding-left: 22px; }
+    .stack::before { left: 4px; }
+    .edge { margin-left: -22px; }
+    .layer { padding: 14px; }
+    .layer::before { left: -22px; }
+    .tech { height: 36px; font-size: 13px; }
+    .tech::after { left: 0; text-align: left; white-space: normal; width: max-content; max-width: min(260px, 78vw); transform: translateY(4px); }
+    .tech:hover::after, .tech:focus-visible::after, .tech.on::after { transform: none; }
+  }
+</style>

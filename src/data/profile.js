@@ -1,0 +1,367 @@
+export const links = {
+  email: 'franromar2002@gmail.com',
+  github: 'https://github.com/Froddes',
+  linkedin: 'https://www.linkedin.com/in/fjrodriguezmartin',
+  froddes: 'https://froddes.com',
+  cv: '/cv/CV_Francisco_Javier_Rodriguez_Martin.pdf',
+};
+
+export const person = {
+  name: 'Francisco Javier Rodríguez Martín',
+  short: 'Fran',
+  user: 'fran',
+  host: 'froddes',
+  since: 2022,
+};
+
+export const projects = [
+  {
+    slug: 'froddes',
+    name: 'Froddes',
+    url: 'https://froddes.com',
+    color: '#33d6dd',
+    logos: ['/logos/froddes.png'],
+    stack: ['n8n', 'Node.js', 'Docker', 'Cloudflare', 'Astro'],
+    es: {
+      kind: 'Mi marca de desarrollo',
+      status: 'Activa',
+      summary: 'La marca bajo la que desarrollo webs, sistemas a medida y soluciones de IA para negocios.',
+      points: [
+        'Webs para clientes con componentes de IA: chatbots y gestión de contenido de redes a través de la API de Meta.',
+        'Sistemas y apps a medida que automatizan tareas del día a día de un negocio.',
+        'Productos de IA propios, empezando por Cittawa. Cada solución nueva se valida antes de entrar en el catálogo.',
+        'Toda la infraestructura es propia: n8n, bases de datos y servicios corren en mi homelab.',
+      ],
+    },
+    en: {
+      kind: 'My development brand',
+      status: 'Active',
+      summary: 'The brand I use to build websites, custom systems and AI solutions for businesses.',
+      points: [
+        'Client websites with AI features: chatbots and social content management through the Meta API.',
+        'Custom systems and apps that automate a business’s day-to-day tasks.',
+        'In-house AI products, starting with Cittawa. Every new solution is validated before it joins the catalogue.',
+        'All infrastructure is my own: n8n, databases and services run on my homelab.',
+      ],
+    },
+  },
+  {
+    slug: 'pitwall',
+    name: 'Pitwall',
+    url: 'https://pitwall.blog',
+    color: '#d6341a',
+    logos: ['/logos/pitwall.png'],
+    stack: ['JavaScript', 'n8n', 'Instagram Graph API', 'PostgreSQL', 'Brevo'],
+    es: {
+      kind: 'Web para marca de contenido',
+      status: 'En producción',
+      summary: 'Web de una marca de motorsport con más de 10.000 seguidores en Instagram.',
+      points: [
+        'Los reels nuevos aparecen solos en la web: un workflow de n8n los sincroniza desde la Graph API de Meta a PostgreSQL y los sirve por un webhook.',
+        'Newsletter conectada a Brevo a través de n8n, con acceso a los suscriptores para el cliente.',
+        'Loader con el semáforo de salida de la F1 y diseño propio con estética de carreras.',
+      ],
+    },
+    en: {
+      kind: 'Website for a content brand',
+      status: 'In production',
+      summary: 'Website for a motorsport brand with 10K+ Instagram followers.',
+      points: [
+        'New reels show up on the site by themselves: an n8n workflow syncs them from Meta’s Graph API into PostgreSQL and serves them through a webhook.',
+        'Newsletter wired to Brevo through n8n, with subscriber access for the client.',
+        'F1 start-lights loader and a custom racing-inspired design.',
+      ],
+    },
+  },
+  {
+    slug: 'paddock-daily',
+    name: 'Paddock Daily',
+    url: 'https://paddock-daily.com',
+    color: '#f2f2f2',
+    logos: ['/logos/paddock-daily.png'],
+    stack: ['Astro', 'Directus', 'PostgreSQL', 'Docker', 'Umami'],
+    es: {
+      kind: 'Medio digital de motorsport',
+      status: 'En producción',
+      summary: 'Web de noticias con CMS headless propio y datos de carrera en vivo.',
+      points: [
+        'Sitio estático en Astro generado a partir de un CMS headless en Directus y PostgreSQL que usa el equipo editorial.',
+        'Directus Flows que rellenan solos la fecha de publicación, el tiempo de lectura y los slugs.',
+        'Resultados y clasificaciones de F1, NASCAR y MotoGP pedidos en el navegador a APIs públicas.',
+        'Búsqueda en cliente, sitemap y JSON-LD, analítica autoalojada con Umami, AdSense y banner de consentimiento.',
+      ],
+    },
+    en: {
+      kind: 'Motorsport news outlet',
+      status: 'In production',
+      summary: 'News site with an in-house headless CMS and live race data.',
+      points: [
+        'Static Astro site built from a Directus + PostgreSQL headless CMS used by the editorial team.',
+        'Directus Flows that fill in publish date, reading time and slugs automatically.',
+        'F1, NASCAR and MotoGP results and standings fetched in the browser from public APIs.',
+        'Client-side search, sitemap and JSON-LD, self-hosted Umami analytics, AdSense and a consent banner.',
+      ],
+    },
+  },
+  {
+    slug: 'marlops',
+    name: 'Marlop’s & La Trasquilá',
+    url: 'https://marlopsylatrasquila.com',
+    color: '#ff6a6c',
+    logos: ['/logos/marlops.png', '/logos/la-trasquila.png'],
+    stack: ['JavaScript', 'Sass', 'Vite'],
+    es: {
+      kind: 'Web para cliente',
+      status: 'En producción · rebranding en curso',
+      summary: 'Web de un catering para eventos con dos marcas: dulce y salado.',
+      points: [
+        'Carta, galería y vídeos cargados desde JSON para actualizar el contenido sin tocar el HTML.',
+        'Formulario con validación en cliente y contacto directo por WhatsApp.',
+      ],
+    },
+    en: {
+      kind: 'Client website',
+      status: 'In production · rebrand in progress',
+      summary: 'Website for an event catering business with two brands: sweet and savoury.',
+      points: [
+        'Menu, gallery and videos rendered from JSON so content can change without touching HTML.',
+        'Form with client-side validation and a direct WhatsApp contact.',
+      ],
+    },
+  },
+  {
+    slug: 'cittawa',
+    name: 'Cittawa',
+    url: 'https://cittawa.es',
+    color: '#f97316',
+    logos: ['/logos/cittawa.png'],
+    stack: ['n8n', 'Node.js', 'PostgreSQL', 'WhatsApp Business API', 'OpenAI', 'Cal.com', 'Docker'],
+    es: {
+      kind: 'Producto propio · base del TFG',
+      status: 'En desarrollo · piloto con un negocio',
+      summary: 'Recepcionista de IA que atiende el WhatsApp de un negocio y gestiona sus citas.',
+      points: [
+        'Entiende lenguaje natural por texto y audio (Whisper) y confirma, cancela y consulta citas sincronizadas con Cal.com.',
+        'Multicliente: credenciales cifradas y aisladas por negocio, historial en PostgreSQL y avisos automáticos cuando falla un mensaje.',
+        'Servicio propio en Node.js que descifra los audios de WhatsApp antes de transcribirlos.',
+        'En curso: n8n en modo cola con Redis, deduplicación de mensajes, restricción anti doble reserva en PostgreSQL, backups y monitorización.',
+        'TFG: calendario y motor de disponibilidad propios, con feeds iCal, para sustituir a Cal.com.',
+      ],
+    },
+    en: {
+      kind: 'Own product · final-year thesis',
+      status: 'In development · pilot with one business',
+      summary: 'AI receptionist that answers a business’s WhatsApp and manages its appointments.',
+      points: [
+        'Understands natural language in text and voice notes (Whisper) and books, cancels and checks appointments synced with Cal.com.',
+        'Multi-tenant: encrypted, isolated credentials per business, history in PostgreSQL and automatic alerts when a message fails.',
+        'Custom Node.js service that decrypts WhatsApp voice notes before transcription.',
+        'In progress: n8n queue mode with Redis, message deduplication, a PostgreSQL constraint against double bookings, backups and monitoring.',
+        'Thesis: an in-house calendar and availability engine with iCal feeds to replace Cal.com.',
+      ],
+    },
+  },
+];
+
+const t = (name, icon, used = [], uni = false) => ({ name, icon, used, uni });
+
+export const layers = [
+  {
+    id: 'frontend',
+    es: 'Frontend',
+    en: 'Frontend',
+    note: { es: 'Lo que ve el usuario', en: 'What the user sees' },
+    items: [
+      t('Astro', 'siAstro', ['paddock-daily']),
+      t('JavaScript', 'siJavascript', ['froddes', 'pitwall', 'paddock-daily', 'marlops', 'cittawa']),
+      t('HTML', 'siHtml5', ['froddes', 'pitwall', 'paddock-daily', 'marlops', 'cittawa']),
+      t('CSS / Sass', 'siSass', ['pitwall', 'paddock-daily', 'marlops', 'cittawa']),
+      t('Vite', 'siVite', ['pitwall', 'marlops', 'cittawa']),
+      t('React', 'siReact'),
+      t('Svelte', 'siSvelte', [], true),
+      t('WordPress', 'siWordpress'),
+    ],
+  },
+  {
+    id: 'backend',
+    es: 'Backend',
+    en: 'Backend',
+    note: { es: 'La lógica detrás', en: 'The logic behind it' },
+    items: [
+      t('Node.js', 'siNodedotjs', ['cittawa', 'paddock-daily']),
+      t('APIs REST', 'siPostman', ['cittawa', 'pitwall', 'paddock-daily']),
+      t('Python', 'siPython'),
+      t('Java', 'siOpenjdk', [], true),
+      t('Haskell', 'siHaskell', [], true),
+    ],
+  },
+  {
+    id: 'datos',
+    es: 'Datos',
+    en: 'Data',
+    note: { es: 'Dónde vive la información', en: 'Where the data lives' },
+    items: [
+      t('PostgreSQL', 'siPostgresql', ['cittawa', 'pitwall', 'paddock-daily']),
+      t('Directus', 'siDirectus', ['paddock-daily']),
+      t('Adminer', 'siAdminer', ['cittawa']),
+      t('MySQL', 'siMysql'),
+      t('Firebase', 'siFirebase'),
+    ],
+  },
+  {
+    id: 'ia',
+    es: 'IA y automatización',
+    en: 'AI & automation',
+    note: { es: 'Lo que trabaja solo', en: 'What runs on its own' },
+    items: [
+      t('n8n', 'siN8n', ['froddes', 'cittawa', 'pitwall']),
+      t('OpenAI', null, ['cittawa']),
+      t('WhatsApp Business API', 'siWhatsapp', ['cittawa']),
+      t('Meta Graph API', 'siMeta', ['froddes', 'pitwall']),
+      t('Cal.com', 'siCaldotcom', ['cittawa']),
+      t('Brevo', 'siBrevo', ['pitwall']),
+    ],
+  },
+  {
+    id: 'infra',
+    es: 'Infraestructura',
+    en: 'Infrastructure',
+    note: { es: 'Dónde corre todo', en: 'Where it all runs' },
+    items: [
+      t('Docker', 'siDocker', ['froddes', 'cittawa', 'paddock-daily']),
+      t('Linux', 'siLinux', ['froddes', 'cittawa', 'paddock-daily']),
+      t('Raspberry Pi', 'siRaspberrypi', ['froddes', 'cittawa', 'paddock-daily']),
+      t('Cloudflare Tunnel', 'siCloudflare', ['froddes', 'cittawa', 'pitwall', 'paddock-daily']),
+      t('Portainer', 'siPortainer', ['froddes', 'cittawa', 'paddock-daily']),
+      t('nginx', 'siNginx', ['cittawa']),
+      t('Umami', 'siUmami', ['paddock-daily']),
+      t('Git', 'siGit', ['froddes', 'pitwall', 'paddock-daily', 'marlops', 'cittawa']),
+    ],
+  },
+  {
+    id: 'empresa',
+    es: 'Sistemas empresariales',
+    en: 'Business systems',
+    note: { es: 'Procesos y gestión', en: 'Processes and management' },
+    items: [
+      t('Bonita BPM', null, [], true),
+      t('Odoo', 'siOdoo', [], true),
+      t('SuiteCRM', null, [], true),
+      t('Scrum', 'siScrumalliance', [], true),
+    ],
+  },
+];
+
+export const stack = layers.map((l) => ({
+  id: l.id,
+  es: l.es,
+  en: l.en,
+  items: l.items.map((i) => (i.uni ? `${i.name} (uni)` : i.name)),
+}));
+
+export const homelab = {
+  services: [
+    { name: 'n8n', es: 'Workflows de Cittawa y Pitwall', en: 'Cittawa and Pitwall workflows' },
+    { name: 'PostgreSQL', es: 'Datos de n8n y del CMS', en: 'n8n and CMS data' },
+    { name: 'Directus', es: 'CMS de Paddock Daily', en: 'Paddock Daily CMS' },
+    { name: 'Umami', es: 'Analítica sin cookies', en: 'Cookieless analytics' },
+    { name: 'nginx', es: 'Proxy interno', en: 'Internal proxy' },
+    { name: 'Adminer', es: 'Administración de BD', en: 'DB admin' },
+  ],
+  external: ['WhatsApp Business API', 'OpenAI', 'Cal.com', 'Instagram Graph API'],
+};
+
+export const copy = {
+  es: {
+    title: 'Fran Rodríguez · Desarrollo full stack, IA e infraestructura',
+    description: 'Portfolio de Francisco Javier Rodríguez Martín, estudiante de Ingeniería Informática en la Universidad de Sevilla. Desarrollo full stack, automatización con IA e infraestructura propia.',
+    nav: { projects: 'Proyectos', homelab: 'Homelab', stack: 'Stack', terminal: 'Terminal', contact: 'Contacto' },
+    hero: {
+      kicker: 'Sevilla · Ingeniería Informática (US)',
+      title: ['Construyo productos completos,', 'del código al servidor.'],
+      intro: 'Soy Fran, estudiante de último curso de Ingeniería Informática – Tecnologías Informáticas en la Universidad de Sevilla. Desde 2022 desarrollo y despliego soluciones para clientes reales: frontend, backend con Node.js, bases de datos, integración de APIs y modelos de lenguaje, y su puesta en producción en infraestructura propia.',
+      availability: 'Disponible para prácticas desde febrero de 2027',
+      availabilityDetail: 'Remoto, híbrido o presencial en Sevilla',
+      cv: 'Descargar CV',
+      explore: 'Explorar en el terminal',
+    },
+    projects: { title: 'Proyectos', lead: 'Trabajo real, en producción o camino de estarlo.', visit: 'Visitar' },
+    homelab: {
+      title: 'Homelab',
+      lead: 'Mis proyectos corren en un servidor Linux propio. Sin puertos abiertos: todo sale a internet a través de Cloudflare Tunnel.',
+      internet: 'Internet',
+      server: 'Raspberry Pi · Docker',
+      managed: 'Gestionado con Portainer · workflows versionados con Git',
+      external: 'APIs externas',
+      hosting: 'Webs estáticas en hosting',
+    },
+    stack: {
+      title: 'Stack',
+      lead: 'Del código al servidor, capa a capa. Pasa por una tecnología para ver en qué proyectos la uso, o elige un proyecto para ver su stack.',
+      filter: 'Ver por proyecto',
+      top: 'código',
+      bottom: 'servidor',
+      uni: 'Visto en la carrera',
+      self: 'Aprendido por mi cuenta',
+      usedIn: 'Lo uso en',
+    },
+    terminal: {
+      title: 'Terminal',
+      lead: 'Toda la información, organizada como un sistema de archivos. Escribe help o usa los atajos.',
+      hint: 'Tab autocompleta · ↑↓ historial · Ctrl+L limpia',
+    },
+    contact: {
+      title: 'Contacto',
+      lead: '¿Tienes una práctica, un proyecto o una pregunta? Escríbeme.',
+      email: 'Email',
+    },
+    footer: 'Hecho con Astro y desplegado en froddes.com',
+    langSwitch: { label: 'EN', href: '/en/', title: 'English version' },
+  },
+  en: {
+    title: 'Fran Rodríguez · Full-stack, AI and infrastructure',
+    description: 'Portfolio of Francisco Javier Rodríguez Martín, final-year Computer Engineering student at the University of Seville. Full-stack development, AI automation and self-hosted infrastructure.',
+    nav: { projects: 'Projects', homelab: 'Homelab', stack: 'Stack', terminal: 'Terminal', contact: 'Contact' },
+    hero: {
+      kicker: 'Seville · Computer Engineering (US)',
+      title: ['I build complete products,', 'from code to server.'],
+      intro: 'I’m Fran, a final-year Computer Engineering student at the University of Seville. Since 2022 I’ve been building and shipping solutions for real clients: frontend, Node.js backends, databases, API and LLM integrations, and running them in production on my own infrastructure.',
+      availability: 'Available for an internship from February 2027',
+      availabilityDetail: 'Remote, hybrid or on-site in Seville',
+      cv: 'Download CV (ES)',
+      explore: 'Explore in the terminal',
+    },
+    projects: { title: 'Projects', lead: 'Real work, in production or on its way there.', visit: 'Visit' },
+    homelab: {
+      title: 'Homelab',
+      lead: 'My projects run on my own Linux server. No open ports: everything reaches the internet through Cloudflare Tunnel.',
+      internet: 'Internet',
+      server: 'Raspberry Pi · Docker',
+      managed: 'Managed with Portainer · workflows versioned with Git',
+      external: 'External APIs',
+      hosting: 'Static sites on hosting',
+    },
+    stack: {
+      title: 'Stack',
+      lead: 'From code to server, layer by layer. Hover a technology to see which projects use it, or pick a project to see its stack.',
+      filter: 'View by project',
+      top: 'code',
+      bottom: 'server',
+      uni: 'Learned at university',
+      self: 'Self-taught',
+      usedIn: 'Used in',
+    },
+    terminal: {
+      title: 'Terminal',
+      lead: 'Everything about me, laid out as a file system. Type help or use the shortcuts.',
+      hint: 'Tab completes · ↑↓ history · Ctrl+L clears',
+    },
+    contact: {
+      title: 'Contact',
+      lead: 'Got an internship, a project or a question? Get in touch.',
+      email: 'Email',
+    },
+    footer: 'Built with Astro and deployed on froddes.com',
+    langSwitch: { label: 'ES', href: '/', title: 'Versión en español' },
+  },
+};

@@ -1,0 +1,66 @@
+---
+import { copy } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang];
+const base = lang === 'es' ? '/' : '/en/';
+const items = ['projects', 'homelab', 'stack', 'terminal', 'contact'];
+---
+<header class="header">
+  <div class="wrap header-inner">
+    <a href={base} class="brand" aria-label="Fran Rodríguez">
+      <span class="brand-user">fran</span><span class="brand-host">@froddes</span>
+    </a>
+    <nav aria-label={lang === 'es' ? 'Secciones' : 'Sections'}>
+      <ul class="nav">
+        {items.map((id) => <li><a href={`#${id}`}>{c.nav[id]}</a></li>)}
+      </ul>
+    </nav>
+    <a class="lang" href={c.langSwitch.href} hreflang={lang === 'es' ? 'en' : 'es'} title={c.langSwitch.title}>
+      {c.langSwitch.label}
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(11, 15, 20, 0.78);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner { display: flex; align-items: center; gap: 24px; height: 64px; }
+  .brand { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+  .brand-user { color: var(--text); }
+  .brand-host { color: var(--accent); }
+  nav { margin-left: auto; }
+  .nav { display: flex; gap: 4px; }
+  .nav a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: var(--text-2);
+    font-size: 14.5px;
+    transition: color .15s, background .15s;
+  }
+  .nav a:hover { color: var(--text); background: var(--surface); }
+  .lang {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    border: 1px solid var(--accent-line);
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: background .15s;
+  }
+  .lang:hover { background: var(--accent-soft); }
+
+  @media (max-width: 760px) {
+    nav { display: none; }
+    .lang { margin-left: auto; }
+  }
+</style>

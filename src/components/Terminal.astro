@@ -1,0 +1,130 @@
+---
+import { copy, person } from '../data/profile.js';
+
+const { lang } = Astro.props;
+const c = copy[lang].terminal;
+const shortcuts = lang === 'es'
+  ? ['help', 'whoami', 'ls proyectos', 'cat about.md', 'tree', 'neofetch', 'download cv']
+  : ['help', 'whoami', 'ls projects', 'cat about.md', 'tree', 'neofetch', 'download cv'];
+---
+<section id="terminal" class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label">~/$</span>
+      <h2>{c.title}</h2>
+      <p>{c.lead}</p>
+    </div>
+
+    <div class="term" data-terminal>
+      <div class="term-bar">
+        <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="term-title">{person.user}@{person.host}: ~</span>
+        <span class="term-hint">{c.hint}</span>
+      </div>
+      <div class="term-screen" data-term-screen>
+        <div class="term-output" data-term-output role="log" aria-live="polite"></div>
+        <form class="term-line" data-term-form autocomplete="off">
+          <label class="term-prompt" for="term-input" data-term-prompt>{person.user}@{person.host}:~$</label>
+          <input id="term-input" class="term-input" data-term-input type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="send" aria-label={lang === 'es' ? 'Comando' : 'Command'} />
+        </form>
+      </div>
+    </div>
+
+    <div class="shortcuts">
+      {shortcuts.map((s) => <button type="button" class="chip" data-cmd={s}>{s}</button>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { mountTerminal } from '../scripts/terminal.js';
+
+  const root = document.querySelector('[data-terminal]');
+  if (root) mountTerminal(root.closest('section'));
+</script>
+
+<style>
+  .term {
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    background: #070a0e;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -40px rgba(51, 214, 221, 0.25);
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 40px;
+    padding: 0 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .lights { display: flex; gap: 7px; }
+  .lights i { width: 11px; height: 11px; border-radius: 50%; background: #2b3641; }
+  .lights i:nth-child(1) { background: #ff6b6b; }
+  .lights i:nth-child(2) { background: #ffd166; }
+  .lights i:nth-child(3) { background: var(--accent); }
+  .term-title { color: var(--text-2); }
+  .term-hint { margin-left: auto; }
+
+  .term-screen {
+    height: 480px;
+    overflow-y: auto;
+    padding: 16px 18px 18px;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #d6dde3;
+    cursor: text;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-2) transparent;
+  }
+  .term-output { white-space: pre-wrap; word-break: break-word; }
+  .term-line { display: flex; gap: 8px; align-items: baseline; }
+  .term-prompt { color: var(--accent); white-space: nowrap; }
+  .term-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    caret-color: var(--accent);
+  }
+
+  .term-output :global(.t-line) { min-height: 1.6em; }
+  .term-output :global(.t-wrap) { white-space: normal; }
+  .term-output :global(.t-prompt) { color: var(--accent); }
+  .term-output :global(.t-dir) { color: var(--accent); font-weight: 600; }
+  .term-output :global(.t-file) { color: #e8edf1; }
+  .term-output :global(.t-dl) { color: var(--warn); }
+  .term-output :global(.t-err) { color: var(--danger); }
+  .term-output :global(.t-muted) { color: var(--muted); }
+  .term-output :global(.t-accent) { color: var(--accent); }
+  .term-output :global(.t-title) { color: #fff; font-weight: 700; }
+  .term-output :global(.t-logo) { color: var(--accent); }
+  .term-output :global(.t-mark) { background: rgba(51, 214, 221, 0.25); color: #fff; border-radius: 2px; }
+  .term-output :global(.t-neo) { display: flex; gap: 24px; align-items: flex-start; margin: 4px 0; }
+  .term-output :global(.t-neo-logo) { width: 120px; height: auto; flex: none; margin-top: 4px; }
+  .term-output :global(.t-neo-info) { min-width: 0; }
+  .term-output :global(.t-neo-colors) { margin-top: 6px; }
+  .term-output :global(.t-swatch) { display: inline-block; width: 22px; height: 12px; margin-right: 3px; border-radius: 2px; vertical-align: middle; }
+
+  .shortcuts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .shortcuts button { cursor: pointer; transition: border-color .15s, color .15s; }
+  .shortcuts button:hover { border-color: var(--accent-line); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .term-hint { display: none; }
+    .term-screen { height: 420px; font-size: 12.5px; padding: 12px; }
+    .term-input { font-size: 16px; }
+    .term-output :global(.t-neo) { flex-direction: column; gap: 12px; }
+    .term-output :global(.t-neo-logo) { width: 84px; }
+  }
+</style>
